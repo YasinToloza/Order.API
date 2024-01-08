@@ -1,0 +1,27 @@
+﻿//EF Core Migrations
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+
+
+// Stored Procedure
+use OrderBD
+CREATE PROC upd_Order_Address
+@Id int,
+@AddressLine NVARCHAR(200),
+@Country  NVARCHAR(200),
+@State NVARCHAR(200),
+@ZipCode  NVARCHAR(200)
+AS
+BEGIN
+UPDATE Orders
+SET
+AddressLine=@AddressLine,
+Country=@Country,
+State=@State,
+ZipCode=@ZipCode,
+LastModifiedBy='user',
+LastModifiedDate=GETDATE()
+WHERE Id=@Id
+END
+
+exec upd_Order_Address 1, 'AAAA', 'BBBB','CCCC','DDDDD'
